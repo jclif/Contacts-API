@@ -56,7 +56,11 @@ ContactsApi::Application.routes.draw do
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id))(.:format)'
 
+  resources :users, :except => [:new, :edit, :update] do
+    resources :contacts, :only => [:index]
+  end
 
-  resources :users
+  resources :contacts, :except => [:index, :new, :edit, :update]
 
+  resources :contact_shares, only: [:create, :destroy]
 end
