@@ -5,9 +5,10 @@ url = Addressable::URI.new(
   scheme: 'http',
   host: 'localhost',
   port: 3000,
-  path: 'contact_shares/2'
+  path: 'favorites/2',
   # query_values: {
-  #   'id' => 1
+  #   'favorite[user_id]' => 1,
+  #   'favorite[contact_id]' => 4
   # }
 ).to_s
 

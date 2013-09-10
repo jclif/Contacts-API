@@ -58,9 +58,11 @@ ContactsApi::Application.routes.draw do
 
   resources :users, :except => [:new, :edit, :update] do
     resources :contacts, :only => [:index]
+    resources :favorites, :only => [:index]
   end
 
   resources :contacts, :except => [:index, :new, :edit, :update]
 
+  resources :favorites, :only => [:create, :destroy]
   resources :contact_shares, only: [:create, :destroy]
 end
