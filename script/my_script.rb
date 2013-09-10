@@ -12,4 +12,4 @@ url = Addressable::URI.new(
   # }
 ).to_s
 
-puts RestClient.delete(url, {})
+puts RestClient.create(url, {})

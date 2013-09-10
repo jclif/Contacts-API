@@ -16,21 +16,32 @@ class Contact < ActiveRecord::Base
   primary_key: :id
   )
 
+  has_many(
+    :groupings,
+    class_name: "Grouping",
+    primary_key: :id,
+    foreign_key: :contact_id
+  )
+
+  has_many :groups, through: :grouping
+
   def self.contacts_for_user_id(user_id)
-    Contact.find_by_sql([<<-SQL, user_id, user_id]) #[user_id, user_id])
-    SELECT
-      c.*
-    FROM
-      contacts as c
-    LEFT JOIN
-      contact_shares as cs
-    ON
-      c.id = cs.contact_id
-    WHERE
-      c.user_id = ?
-    OR
-      cs.user_id = ?
-    SQL
+    Contact.joins(:shares).where("contacts.user_id = ? OR contact_shares.user_id = ?", user_id, user_id) # does the same as below
+
+    # Contact.find_by_sql([<<-SQL, user_id, user_id]) #[user_id, user_id])
+#     SELECT
+#       c.*
+#     FROM
+#       contacts as c
+#     LEFT JOIN
+#       contact_shares as cs
+#     ON
+#       c.id = cs.contact_id
+#     WHERE
+#       c.user_id = ?
+#     OR
+#       cs.user_id = ?
+#     SQL
   end
 
   def self.favorites_for_user_id(user_id)
